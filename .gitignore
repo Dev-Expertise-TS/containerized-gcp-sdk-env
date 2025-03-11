@@ -1,0 +1,8 @@
+gcp-config/keyfiles/**/*
+!gcp-config/keyfiles/.gitkeep
+.env
+.env.*
+!.env.example
+projects/**/*
+!projects/.gitkeep
+.vscode-server
