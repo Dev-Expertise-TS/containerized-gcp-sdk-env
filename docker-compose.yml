@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: gcp-dev-environment
+    container_name: gcp-dev-container
     volumes:
       # 프로젝트 디렉토리 마운트
       - .:/workspace
@@ -11,14 +11,14 @@ services:
       - ./gcp-config/keyfiles/${KEYFILE_NAME:-gcp-svc-acc.json}:/root/.config/gcloud/application_default_credentials.json
     ports:
       # VS Code Server 포트
-      - "${VSCODE_EXPOSE_PORT:-8080}:8080"
+      - '${VSCODE_EXPOSE_PORT:-8080}:8080'
     environment:
       - VSCODE_EXPOSE_PORT=${VSCODE_EXPOSE_PORT:-8080}
       - KEYFILE_NAME=${KEYFILE_NAME:-gcp-svc-acc.json}
       - GOOGLE_APPLICATION_CREDENTIALS=/root/.config/gcloud/application_default_credentials.json # ADC 인증 파일 지정 환경변수
       - TZ=${TZ:-Asia/Seoul}
     # 컨테이너 시작 시 프로젝트 설정 스크립트 실행
-    command: ["/workspace/start-container.sh"]
+    command: ['/workspace/start-container.sh']
     # 컨테이너가 종료되지 않도록 설정
     tty: true
     stdin_open: true
@@ -27,4 +27,4 @@ services:
     # 특권 모드는 필요한 경우에만 활성화 (일반적으로 필요하지 않음)
     # privileged: true
     # 네트워크 모드 (호스트 네트워크를 사용하려면 'host'로 변경)
-    # network_mode: bridge 
+    # network_mode: bridge
